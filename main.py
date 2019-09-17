@@ -5,81 +5,126 @@ import matplotlib.pyplot as plt
 import time
 from time import perf_counter
 import csv
+import timeit
 
-
-def selection_sort(arr):
+def selectionSort(A):
 
     comparisons = 0
     swaps = 0
 
-    for i in range(len(arr)):
+    for i in range(len(A)):
 
         # Find the minimum element in remaining
         # unsorted array
         min_idx = i
-        for j in range(i + 1, len(arr)):
-            if arr[min_idx] > arr[j]:
+        for j in range(i + 1, len(A)):
+            if A[min_idx] > A[j]:
                 min_idx = j
-                comparisons+=1
+                comparisons += 1
+                # Swap the found minimum element with
+        # the first element
+        A[i], A[min_idx] = A[min_idx], A[i]
+        swaps += 1
 
-        arr[i], arr[min_idx] = arr[min_idx], arr[i]
-        swaps+=1
+    print("Selection Sort: The # of comparisons: ", comparisons, ", and the # of SWAPS is: ", swaps)
 
 
-    print("The # of comparisons: ", comparisons, ", and the # of SWAPS is: ",swaps)
-    print(arr)
 
-def insertion_sort(arr):
-    swaps=0
-    comparisons=0
+def insertionSort(arr):
+    # Traverse through 1 to len(arr)
+    comparisons = 0
+    swaps = 0
 
-    for i in range(len(arr)):
-        less = True
-        j=i
-    while j> 0 and less:
-        if (arr[j]<arr[j-1]):
-            dummy=arr[j-1]
-            arr[j-1]= arr[j]
-            arr[j]=dummy
-            j=-1
+    for i in range(1, len(arr)):
 
+        key = arr[i]
+
+        # Move elements of arr[0..i-1], that are
+        # greater than key, to one position ahead
+        # of their current position
+        j = i - 1
+        while j >= 0 and key < arr[j]:
+            comparisons += 1
+            arr[j + 1] = arr[j]
             swaps+=1
-            comparisons+=1
+            j -= 1
+        arr[j + 1] = key
+        swaps += 1
+    print("Insertion Sort: The # of comparisons: ", comparisons, ", and the # of SWAPS is: ", swaps)
 
-        else:
-            less=False
 
-        comparisons+=1
+def partition(arr, low, high):
+    i = (low - 1)  # index of smaller element
+    pivot = arr[high]  # pivot
 
-    for j in range(len(arr)):
-        print(arr)
+    for j in range(low, high):
+
+        # If current element is smaller than or
+        # equal to pivot
+        if arr[j] <= pivot:
+            # increment index of smaller element
+            i = i + 1
+            arr[i], arr[j] = arr[j], arr[i]
+
+    arr[i + 1], arr[high] = arr[high], arr[i + 1]
+    return (i + 1)
+
+
+
+
+# Function to do Quick sort
+def quickSort(arr, low, high):
+
+
+
+    comparisons=0
+    swaps = 0
+
+    if low < high:
+         # pi is partitioning index, arr[p] is now
+        # at right place
+        pi = partition(arr, low, high)
+
+        # Separately sort elements before
+        # partition and after partition
+        quickSort(arr, low, pi - 1)
+        quickSort(arr, pi + 1, high)
+
+
+
 
 
 def main():
 
- test=0
- for i in range(1000000):
-    test+=i
-    print(i)
+
+ arr=[0]
+ for i in range(1000000, 1,-1):
+    arr.append(i)
+ length=len(arr)
+
+
+
+
 
  t1_start = perf_counter()
- selection_sort(test)
+ selectionSort(arr[:])
  t1_stop = perf_counter()
- timer=  (t1_stop-t1_start)
- print("Elapsed time during the whole program in seconds:",timer)
- print("{:.10f}".format(timer))
+ timer=  (t1_stop-t1_start/100000)
+ print("Elapsed time during Selection Sort:",timer)
 
- arr = [2, 3, 1, 5]
- arrTwo = [10, 2, 3, 5]
 
- with open('mycsv.csv', 'w', newline='') as data:
-     thewriter = csv.writer(data)
 
-     thewriter.writerow(['Time', 'Swaps', 'Comparisons'])
-     thewriter.writerow(['Selection Sort', 'Insertion Sort', 'COL3'])
 
- for i in range(len(arr)):
-     print(arr[i])
+ t1_start = perf_counter()
+ insertionSort(arr[:])
+ t1_stop = perf_counter()
+ timer=  (t1_stop-t1_start/100000)
+ print("Elapsed time during Selection Sort:",timer)
+
+
+
+
+
 
 if __name__ == '__main__':
     main()
