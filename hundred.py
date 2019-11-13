@@ -16,7 +16,7 @@ elements = list()
 times = list()
 for i in range(1, 10):
     # generate some integers
-    a = randint(0, 100 * i, 100 * i)
+    a = randint(0, 10 * i, 10 * i)
     # print(i)
     start = time.perf_counter()
     algo.HeapSort(a[:])
@@ -36,7 +36,7 @@ elements = list()
 times = list()
 for i in range(1, 10):
     # generate some integers
-    a = randint(0, 100 * i, 100 * i)
+    a = randint(0, 10 * i, 10 * i)
     # print(i)
     start = time.perf_counter()
     algo.insertionSort(a[:])
@@ -54,7 +54,7 @@ elements = list()
 times = list()
 for i in range(1, 10):
     # generate some integers
-    a = randint(0, 100 * i, 100 * i)
+    a = randint(0, 10 * i, 10 * i)
     # print(i)
     start = time.perf_counter()
     algo.selectionSort(a[:])
@@ -72,10 +72,10 @@ elements = list()
 times = list()
 for i in range(1, 10):
     # generate some integers
-    a = randint(0, 100 * i, 100 * i)
+    a = randint(0, 10 * i, 10 * i)
     # print(i)
     start = time.perf_counter()
-    algo.quickSort(a[:],0,99)
+    algo.quickSort(a[:],0,9)
     end = time.perf_counter()
     # print("Sorted list is ", a)
     print(len(a), "Elements Sorted by Quick Sort in ", end - start)
@@ -83,6 +83,11 @@ for i in range(1, 10):
     times.append(end - start)
 
 plt.plot(elements, times,'g', label='Quick Sort')
+
+
+
+
+
 plt.xlabel('List Length')
 plt.ylabel('Time Complexity')
 plt.title('100 Element array')
